@@ -1,0 +1,31 @@
+Documentation on architecture and design.
+-----------------------------------------
+
+1. To store the urls, short keys and counts 4 concurrrent hashmap have been used to make the application thread safe.
+
+hashmap1 for short_url and long_url
+hashmap2 for long_url and short_url
+hashmap3 for short_url and visit_count
+hashmap4 for long_url and visit_count
+
+conditions
+when the user stores long url - A short key is generated and store in the hashmap
+When a user does the get operation - A short key for the long url is shown
+User can get the visit count.
+User can get the list of all the urls and visit count.
+
+The approach for encoding is as follows:-
+
+The idea is to assign a unique integer id to each long URL representation and convert this integer id to its base-62 representation.
+
+A URL character can be one of the following
+
+Lower case alphabet [a to z], total 26 characters
+Upper case alphabet [A to Z], total 26 characters
+Digit [0 to 9], total 10 characters
+So there are total 26 + 26 + 10 = 62 possible characters and hence the task is to convert a decimal number to base 62 number.
+
+To get the original long URL, we need to get URL stored in the Map.
+
+Time complexity: O(log n) for encode() method . To covert decimal integer id n to its base-62 representation will take O(log62(n)) time.
+Space complexity: O(m) - where m is the number of entries in the HashMap. i.e., the number of shortURLs generated so far.
